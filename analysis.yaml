@@ -76,21 +76,14 @@ objects:
           livenessProbe:
             exec:
               command:
-              - /bin/sh
-              - -i
-              - -c
               - whoami
             initialDelaySeconds: 5
             timeoutSeconds: 1
           name: analysis
-          ports:
-          - containerPort: 8080
+          ports: []
           readinessProbe:
             exec:
               command:
-              - /bin/sh
-              - -i
-              - -c
               - whoami
             initialDelaySeconds: 5
             timeoutSeconds: 1
