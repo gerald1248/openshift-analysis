@@ -7,4 +7,4 @@ RUN adduser --system -u 10001 user
 RUN mkdir -p /opt/app  && chown -R user: /opt/app
 COPY ./S2iScripts/ /usr/local/s2i
 USER 10001
-CMD ["/bin/sh"]
+#CMD ["/bin/sh"]

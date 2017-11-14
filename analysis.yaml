@@ -11,7 +11,7 @@ metadata:
     openshift.io/display-name: Analysis
     tags: analysis
     creationTimestamp: null
-    name: analysis
+  name: analysis
 objects:
 - apiVersion: v1
   kind: ImageStream
@@ -73,20 +73,20 @@ objects:
         containers:
         - env: []
           image: ' '
-#          livenessProbe:
-#            exec:
-#              command:
-#              - whoami
-#            initialDelaySeconds: 5
-#            timeoutSeconds: 1
+          livenessProbe:
+            exec:
+              command:
+              - whoami
+            initialDelaySeconds: 5
+            timeoutSeconds: 1
           name: analysis
           ports: []
-#          readinessProbe:
-#            exec:
-#              command:
-#              - whoami
-#            initialDelaySeconds: 5
-#            timeoutSeconds: 1
+          readinessProbe:
+            exec:
+              command:
+              - whoami
+            initialDelaySeconds: 5
+            timeoutSeconds: 1
           resources:
             limits:
               memory: ${MEMORY_LIMIT}
