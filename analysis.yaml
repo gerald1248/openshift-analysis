@@ -76,7 +76,7 @@ objects:
           livenessProbe:
             exec:
               command:
-              - whoami
+              - pwd
             initialDelaySeconds: 5
             timeoutSeconds: 1
           name: analysis
@@ -84,12 +84,13 @@ objects:
           readinessProbe:
             exec:
               command:
-              - whoami
+              - pwd
             initialDelaySeconds: 5
             timeoutSeconds: 1
           resources:
             limits:
               memory: ${MEMORY_LIMIT}
+              cpu: ${CPU_LIMIT}
     triggers:
     - imageChangeParams:
         automatic: true
@@ -106,16 +107,16 @@ parameters:
   name: NAME
   required: true
   value: analysis
-- description: The OpenShift Namespace where the ImageStream resides.
-  displayName: Namespace
-  name: NAMESPACE
-  required: true
-  value: openshift
 - description: Maximum amount of memory the container can use.
   displayName: Memory Limit
   name: MEMORY_LIMIT
   required: true
   value: 256Mi
+- description: Maximum CPU allowance.
+  displayName: CPU Limit
+  name: CPU_LIMIT
+  required: true
+  value: 200m
 - description: The URL of the repository with your application source code.
   displayName: Git Repository URL
   name: SOURCE_REPOSITORY_URL
