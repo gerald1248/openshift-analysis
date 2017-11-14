@@ -1,144 +1,40 @@
 apiVersion: v1
-kind: Template
-labels:
-  template: analysis
-message: |-
-  The following service(s) have been created in your project: ${NAME}.
+kind: List
 metadata:
-  annotations:
-    description: basic analysis service
-    iconClass: icon-apache
-    openshift.io/display-name: Analysis
-    tags: analysis
-    creationTimestamp: null
-  name: analysis
-objects:
+  name: analyze
+items:
 - apiVersion: v1
   kind: ImageStream
   metadata:
-    annotations:
-      description: Keeps track of changes in the application image
-    name: ${NAME}
+    name: analyze
+    labels:
+      app: analyze
 - apiVersion: v1
   kind: BuildConfig
   metadata:
-    annotations:
-      description: Defines how to build the pod
-      template.alpha.openshift.io/wait-for-ready: "true"
-    name: ${NAME}
+    name: analyze
+    labels:
+      app: analyze
   spec:
-    output:
-      to:
-        kind: ImageStreamTag
-        name: ${NAME}:latest
+    triggers:
+      -
+        type: ImageChange
     source:
-      contextDir: ${CONTEXT_DIR}
-      git:
-        ref: ${SOURCE_REPOSITORY_REF}
-        uri: ${SOURCE_REPOSITORY_URL}
-      type: Git
+      type: Dockerfile
+      dockerfile: |-
+        FROM centos:7
+        RUN yum install -y nc telnet traceroute scap-security-guide openscap-scanner openscap-utils
+        RUN groupadd -r app -g 1000 && useradd -u 1000 -r -g app -m -d /app -s /sbin/nologin -c "Userapp" app && chmod 755 /app
+        WORKDIR /app
+        USER app
+        CMD ["/bin/sh"]
     strategy:
       type: Docker
       dockerStrategy:
-        dockerFilePath: Dockerfile
-        noCache: true
-    triggers:
-    - type: ImageChange
-    - type: ConfigChange
-    - github:
-        secret: ${GITHUB_WEBHOOK_SECRET}
-      type: GitHub
-    - generic:
-        secret: ${GENERIC_WEBHOOK_SECRET}
-      type: Generic
-- apiVersion: v1
-  kind: DeploymentConfig
-  metadata:
-    annotations:
-      description: Defines how to deploy the application server
-      template.alpha.openshift.io/wait-for-ready: "true"
-    name: ${NAME}
-  spec:
-    replicas: 1
-    selector:
-      name: ${NAME}
-    strategy:
-      type: Rolling
-    template:
-      metadata:
-        labels:
-          name: ${NAME}
-        name: ${NAME}
-      spec:
-        containers:
-        - env: []
-          image: ' '
-          livenessProbe:
-            exec:
-              command:
-              - pwd
-            initialDelaySeconds: 5
-            timeoutSeconds: 1
-          name: analysis
-          ports: []
-          readinessProbe:
-            exec:
-              command:
-              - pwd
-            initialDelaySeconds: 5
-            timeoutSeconds: 1
-          resources:
-            limits:
-              memory: ${MEMORY_LIMIT}
-              cpu: ${CPU_LIMIT}
-    triggers:
-    - imageChangeParams:
-        automatic: true
-        containerNames:
-        - analysis
         from:
-          kind: ImageStreamTag
-          name: ${NAME}:latest
-      type: ImageChange
-    - type: ConfigChange
-parameters:
-- description: The name assigned to all of the frontend objects defined in this template.
-  displayName: Name
-  name: NAME
-  required: true
-  value: analysis
-- description: Maximum amount of memory the container can use.
-  displayName: Memory Limit
-  name: MEMORY_LIMIT
-  required: true
-  value: 256Mi
-- description: Maximum CPU allowance.
-  displayName: CPU Limit
-  name: CPU_LIMIT
-  required: true
-  value: 200m
-- description: The URL of the repository with your application source code.
-  displayName: Git Repository URL
-  name: SOURCE_REPOSITORY_URL
-  required: true
-  value: https://github.com/gerald1248/openshift-analysis.git
-- description: Set this to a branch name, tag or other ref of your repository if you
-    are not using the default branch.
-  displayName: Git Reference
-  name: SOURCE_REPOSITORY_REF
-  value: master
-- description: Set this to the relative path to your project if it is not in the root
-    of your repository.
-  displayName: Context Directory
-  name: CONTEXT_DIR
-- description: Github trigger secret.  A difficult to guess string encoded as part
-    of the webhook URL.  Not encrypted.
-  displayName: GitHub Webhook Secret
-  from: '[a-zA-Z0-9]{40}'
-  generate: expression
-  name: GITHUB_WEBHOOK_SECRET
-- description: A secret string used to configure the Generic webhook.
-  displayName: Generic Webhook Secret
-  from: '[a-zA-Z0-9]{40}'
-  generate: expression
-  name: GENERIC_WEBHOOK_SECRET
+          kind: DockerImage
+          name: "centos:7"
+    output:
+      to:
+        kind: ImageStreamTag
+        name: "analyze:latest"
