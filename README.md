@@ -2,8 +2,9 @@
 Analysis pod for debugging
 
 ```
-$ create -f analysis.yaml
+$ oc create -f analysis.yaml
 $ oc start-build bc/analysis
+$ oc logs -f bc/analysis
 $ oc run analysis -i --tty --rm --image=<Docker registry>:<Docker registry port>/<current project>/analysis:latest
 ```
 A typical invocation for a `minishift` installation might be:
