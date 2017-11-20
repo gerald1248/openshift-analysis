@@ -3,7 +3,7 @@ Analysis pod for debugging
 
 ## Quick start
 ```
-$ oc run analysis -i --tty --rm --image=gerald1248/openshift-analysis:latest
+$ oc run openshift-analysis -i --tty --rm --image=gerald1248/openshift-analysis:latest
 ```
 
 ## Steps
