@@ -1,6 +1,12 @@
 # openshift-analysis
 Analysis pod for debugging
 
+## Quick start
+```
+$ oc run analysis -i --tty --rm --image=gerald1248/openshift-analysis:latest
+```
+
+## Steps
 ```
 $ oc create -f analysis.yaml
 $ oc start-build bc/analysis
