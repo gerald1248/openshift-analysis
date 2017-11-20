@@ -2,6 +2,7 @@
 Analysis pod for debugging
 
 ## Quick start
+If you'd rather not build the analysis image yourself, you can run it from Docker Hub as follows:
 ```
 $ oc run openshift-analysis -i --tty --rm --image=gerald1248/openshift-analysis:latest
 ```
