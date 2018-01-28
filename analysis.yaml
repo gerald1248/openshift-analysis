@@ -22,9 +22,9 @@ items:
     source:
       type: Dockerfile
       dockerfile: |-
-        FROM centos:7
-        RUN yum install -y nc telnet traceroute
-        RUN groupadd -r app -g 1000 && useradd -u 1000 -r -g app -m -d /app -s /sbin/nologin -c "User app" app && chmod 755 /app
+        FROM gliderlabs/alpine:latest
+        RUN apk add --no-cache curl bind-tools apache2-utils mysql-client postgresql-client
+        RUN addgroup -S app && adduser -S -g app app
         WORKDIR /app
         USER app
         CMD ["/bin/sh"]
