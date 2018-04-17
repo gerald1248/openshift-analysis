@@ -23,6 +23,9 @@ $ oc new-app --docker-image=gerald1248/openshift-analysis:latest
     deploymentconfig "openshift-analysis" created
 --> Success
     Run 'oc status' to view your app.
-$ oc rsh `oc get po | awk '{ print $1 }' | head -n2 | grep -v NAME`
+$ oc get po
+NAME                         READY     STATUS    RESTARTS   AGE
+openshift-analysis-1-pczgr   1/1       Running   0          2m
+$ oc rsh openshift-analysis-1-pczgr
 /app $
 ```
