@@ -7,7 +7,8 @@ Run the analysis container from Docker Hub as follows:
 $ oc run analysis -i --tty --rm --image=gerald1248/openshift-analysis:latest
 ```
 
-## For repeated use, run `oc new-app` then `oc rsh`
+## For repeated use...
+...run `oc new-app` then `oc rsh`:
 ```
 $ oc new-app --docker-image=gerald1248/openshift-analysis:latest
 --> Found Docker image d7f14bb (9 minutes old) from Docker Hub for "gerald1248/openshift-analysis:latest"
