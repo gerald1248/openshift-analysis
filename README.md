@@ -2,7 +2,7 @@
 Analysis pod for debugging: deploy within your project and run `ab`, `dig`, `netstat`, `nslookup`, `telnet`, `traceroute`, `wget`, and so on as well as database clients for MySQL and PostgreSQL.
 
 ## Quick start
-If you'd rather not build the analysis image yourself, you can run it from Docker Hub as follows:
+Run the analysis container from Docker Hub as follows:
 ```
 $ oc run analysis -i --tty --rm --image=gerald1248/openshift-analysis:latest
 ```
