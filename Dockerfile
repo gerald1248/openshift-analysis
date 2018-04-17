@@ -5,4 +5,4 @@ RUN apk add --no-cache curl bind-tools apache2-utils mysql-client postgresql-cli
 RUN addgroup -S app && adduser -S -g app app
 WORKDIR /app
 USER app
-CMD ["/bin/sh"]
+CMD ["/bin/sh", "-c", "while true; do sleep 60; done"]
