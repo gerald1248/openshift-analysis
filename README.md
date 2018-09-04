@@ -1,4 +1,8 @@
 # openshift-analysis
+
+![Docker Automated](https://img.shields.io/docker/automated/gerald1248/openshift-analysis.svg)
+![Docker Build](https://img.shields.io/docker/build/gerald1248/openshift-analysis.svg)
+
 Analysis pod for debugging: deploy within your project and run `ab`, `dig`, `netstat`, `nslookup`, `telnet`, `traceroute`, `wget`, and so on as well as database clients for MySQL and PostgreSQL.
 
 ## Quick start
@@ -10,7 +14,7 @@ $ oc run analysis -i --tty --rm --image=gerald1248/openshift-analysis:latest
 ## For repeated use...
 ...run `oc new-app` then `oc rsh`:
 ```
-$ oc new-app --docker-image=gerald1248/openshift-analysis:latest
+$ oc new-app --name=analysis --docker-image=gerald1248/openshift-analysis:latest
 --> Found Docker image d7f14bb (9 minutes old) from Docker Hub for "gerald1248/openshift-analysis:latest"
 
     * An image stream will be created as "openshift-analysis:latest" that will track this image
